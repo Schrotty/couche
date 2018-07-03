@@ -16,8 +16,15 @@ public class Movie : MainDocument {
     public string Description { get; set; }
 
     public List<string> Actors = new List<string>();
+    
+    private static readonly string _table = "movies";
 
-    public static readonly CouchFacade Facade = CouchFacade.create("movies");
+    public static readonly CouchFacade Facade = CouchFacade.create(_table);
+
+    public static Movie Empty
+    {
+        get => new Movie(String.Empty, String.Empty);
+    }
 
     public Movie(string id, string name) : base(id)
     {
@@ -44,13 +51,47 @@ public class Movie : MainDocument {
         return actors;
     }
 
-    public static List<Movie> Where(string value, int count = 10)
+    public static Movie ByID(string id)
     {
-        var context = new BucketContext(ClusterHelper.GetBucket("movies"));
+        var context = new BucketContext(ClusterHelper.GetBucket(_table));
         var query = (from m in context.Query<Movie>()
-                     where m.Name.Contains(value)
+                     where m.ID == id
+                     select m);
+
+        return query.Count() == 0 ? Movie.Empty : query.First();
+    }
+
+    public static Movie WhereName(string name)
+    {
+        var context = new BucketContext(ClusterHelper.GetBucket(_table));
+        var query = (from m in context.Query<Movie>()
+                     where m.Name == name
+                     select m);
+
+        return query.Count() == 0 ? Movie.Empty : query.First();
+    }
+
+    public static List<Movie> WhereNameLike(string name, int count = 10)
+    {
+        var context = new BucketContext(ClusterHelper.GetBucket(_table));
+        var query = (from m in context.Query<Movie>()
+                     where m.Name.Contains(name)
                      select m).Take(count);
 
         return query.ToList();
+    }
+
+    public static void Print(Movie movie)
+    {
+        Console.WriteLine(String.Format("Name: {0}", movie.Name));
+        Console.WriteLine(String.Format("Description: {0}", movie.Description));
+        Console.WriteLine(String.Format("Release: {0}", movie.Release));
+        Console.WriteLine("Actors: ");
+        movie.GetActors().ForEach(m => 
+        {
+            Console.WriteLine(String.Format("Name: {0}", m.Name));
+        });
+
+        Console.WriteLine(String.Empty);
     }
 }

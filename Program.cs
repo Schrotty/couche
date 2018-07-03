@@ -44,7 +44,7 @@ namespace couchbase
 
             string[] silver = { "6", "7", "8" };
             Movie.Facade.UpdateDocument<Movie>(
-                new Movie("3", "Silver Linings")
+                new Movie("2", "Silver Linings")
                 {
                     Release = new DateTime(1977, 5, 25),
                     Description = "Pat Solitano Jr. wird aus einer Klinik entlassen, in der er aufgrund einer manisch-depressiven Störung acht Monate verbracht hatte...",
@@ -52,12 +52,29 @@ namespace couchbase
                 }
             );
 
-            // display all actor names
-            Movie.Facade.GetDocument<Movie>("0").GetActors().ForEach(actor => {
-                Console.WriteLine(actor.Name);
-            });
+            string _command = String.Empty;
+            
+            do {
+                Console.WriteLine("+--- Couchbase Access Console ---+");
+                Console.WriteLine("| 1 - Get movie by ID            |");
+                Console.WriteLine("| 2 - Get movie by name          |");
+                Console.WriteLine("| 3 - Get list of movies by name |");
+                Console.WriteLine("| 4 - Get actor by ID            |");
+                Console.WriteLine("| 5 - Get actor by name          |");
+                Console.WriteLine("| 6 - Get list of actors by name |");
+                Console.WriteLine("| 0 - Exit                       |");
+                Console.WriteLine("+--------------------------------+");
 
-            Movie.Where("der").ForEach(m => Console.WriteLine(m.Name));
+                // read command from console
+                Console.Write("Enter command: ");
+                _command = Console.ReadLine();
+
+                if (_command.Equals("1"))
+                {
+                    Console.Write("\r\nEnter ID: ");
+                    Movie.Print(Movie.ByID(Console.ReadLine()));
+                }
+            } while (_command != "0");
         }
     }
 }
