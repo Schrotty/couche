@@ -23,7 +23,7 @@ public class Movie : MainDocument {
 
     public static Movie Empty
     {
-        get => new Movie(String.Empty, String.Empty);
+        get => new Movie(String.Empty, "No Result!");
     }
 
     public Movie(string id, string name) : base(id)
