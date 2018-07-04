@@ -3,8 +3,14 @@ using System.Collections.Generic;
 
 namespace couchbase
 {
+    /// <summary>
+    /// Class for creating dummy movies and actors.
+    /// </summary>
     public static class DummyCreator
     {
+        /// <summary>
+        /// Create dummy movies and actors.
+        /// </summary>
         public static void CreateDummies()
         {
             // create some actors
