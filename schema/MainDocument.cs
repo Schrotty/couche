@@ -1,25 +1,28 @@
 using Couchbase.Core;
 
-/// <summary>
-/// Main document.
-/// </summary>
-public abstract class MainDocument
+namespace couchbase.Schema
 {
     /// <summary>
-    /// Id of the document.
+    /// Main document.
     /// </summary>
-    /// <returns>The documents id</returns>
-    public string ID {
-        get;
-        set;
-    }
-
-    /// <summary>
-    /// Create a new main document.
-    /// </summary>
-    /// <param name="id">The id of the document</param>
-    public MainDocument(string id)
+    public abstract class MainDocument
     {
-        this.ID = id;
+        /// <summary>
+        /// Id of the document.
+        /// </summary>
+        /// <returns>The documents id</returns>
+        public string ID {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Create a new main document.
+        /// </summary>
+        /// <param name="id">The id of the document</param>
+        public MainDocument(string id)
+        {
+            this.ID = id;
+        }
     }
 }

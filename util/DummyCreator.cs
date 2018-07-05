@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using couchbase.Schema;
 
-namespace couchbase
+namespace couchbase.Util
 {
     /// <summary>
     /// Class for creating dummy movies and actors.

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using couchbase.Core;
+using couchbase.Schema;
+using couchbase.Util;
 using Couchbase;
 using Couchbase.Authentication;
 using Couchbase.Configuration.Client;
@@ -9,8 +12,14 @@ namespace couchbase
     /// <summary>
     /// The Program.
     /// </summary>
-    class Program
+    public class Program
     {
+        /// <summary>
+        /// Application settings.
+        /// </summary>
+        /// <returns>Application settings</returns>
+        public static Settings Settings = new Settings();
+
         /// <summary>
         /// Main entrance point for the application.
         /// </summary>
@@ -19,11 +28,36 @@ namespace couchbase
         {
             try
             {
+                Console.WriteLine("===================================");
+                Console.WriteLine("=== Enter couchbase credentials ===");
+                Console.WriteLine("===================================");
+
+                // enter uri
+                Console.Write(String.Format("Enter uri ({0}): ", Program.Settings.Uri));
+
+                var _hostname = Console.ReadLine();
+                Program.Settings.Uri = String.IsNullOrEmpty(_hostname) ? Program.Settings.Uri : _hostname;
+
+                // enter username
+                Console.Write(String.Format("Enter username ({0}): ", Program.Settings.Username));
+
+                var _username = Console.ReadLine();
+                Program.Settings.Username = String.IsNullOrEmpty(_username) ? Program.Settings.Username : _username;
+
+                // enter password
+                Console.Write(String.Format("Enter password ({0}): ", Program.Settings.Password));
+
+                var _password = Console.ReadLine();
+                Program.Settings.Password = String.IsNullOrEmpty(_password) ? Program.Settings.Password : _password;               
+
                 DummyCreator.CreateDummies();
                 string _command = String.Empty;
+
+                // clear console
+                Console.Clear();
                 
                 do {
-                    Console.WriteLine("+--- Couchbase Access Console ---+");
+                    Console.WriteLine("+=== Couchbase Access Console ===+");
                     Console.WriteLine("| 1 - Get movie by ID            |");
                     Console.WriteLine("| 2 - Get movie by name          |");
                     Console.WriteLine("| 3 - Get list of movies by name |");
@@ -31,7 +65,7 @@ namespace couchbase
                     Console.WriteLine("| 5 - Get actor by name          |");
                     Console.WriteLine("| 6 - Get list of actors by name |");
                     Console.WriteLine("| 0 - Exit                       |");
-                    Console.WriteLine("+--------------------------------+");
+                    Console.WriteLine("+================================+");
 
                     // read command from console
                     Console.Write("Enter command: ");
@@ -85,6 +119,7 @@ namespace couchbase
             catch (Exception e)
             {
                 Console.Error.WriteLine(String.Format("Error: {0}", e.Message));
+                Console.ReadKey();
             }
         }
     }
