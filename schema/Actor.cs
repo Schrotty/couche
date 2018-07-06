@@ -104,8 +104,7 @@ namespace couchbase.Schema
         /// <param name="actor">The actor to print</param>
         public static void Print(Actor actor)
         {
-            Console.WriteLine(String.Format("Name: {0}", actor.Name));
-            Console.WriteLine(String.Empty);
+            Console.WriteLine(String.Format("| Name: {0}", actor.Name));
         }
     }
 }

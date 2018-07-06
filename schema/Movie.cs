@@ -163,16 +163,14 @@ namespace couchbase.Schema
         /// <param name="movie">The movie to print</param>
         public static void Print(Movie movie)
         {
-            Console.WriteLine(String.Format("Name: {0}", movie.Name));
-            Console.WriteLine(String.Format("Description: {0}", movie.Description));
-            Console.WriteLine(String.Format("Release: {0}", movie.Release));
-            Console.WriteLine("Actors: ");
+            Console.WriteLine(String.Format("| Name: {0}", movie.Name));
+            Console.WriteLine(String.Format("| Description: {0}", movie.Description));
+            Console.WriteLine(String.Format("| Release: {0}", movie.Release));
+            Console.WriteLine("| Actors: ");
             movie.GetActors().ForEach(m => 
             {
-                Console.WriteLine(String.Format("Name: {0}", m.Name));
+                Console.WriteLine(String.Format("| -Name: {0}", m.Name));
             });
-
-            Console.WriteLine(String.Empty);
         }
     }
 }

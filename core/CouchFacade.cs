@@ -48,7 +48,8 @@ namespace couchbase.Core
                 
                 using (var bucket = _cluster.OpenBucket(_bucketName))
                 {
-                    bucket.CreateManager().CreateN1qlIndex("index", false, "name", "id");
+                    bucket.CreateManager().CreateN1qlIndex("Name", false, "name");
+                    bucket.CreateManager().CreateN1qlIndex("ID", false, "id");
                 }
             }
             catch (Exception e)
