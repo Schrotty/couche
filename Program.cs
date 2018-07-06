@@ -71,12 +71,14 @@ namespace couchbase
                     Console.WriteLine("| 2 - Get movie by name          |");
                     Console.WriteLine("| 3 - Get list of movies by name |");
                     Console.WriteLine("| 7 - Create new movie           |");
+                    Console.WriteLine("| 9 - Delete movie               |");
                     Console.WriteLine("+================================+");
                     Console.WriteLine("| Actor:                         |");
                     Console.WriteLine("| 4 - Get actor by ID            |");
                     Console.WriteLine("| 5 - Get actor by name          |");
                     Console.WriteLine("| 6 - Get list of actors by name |");
                     Console.WriteLine("| 8 - Create new actor           |");
+                    Console.WriteLine("| 10 - Delete actor              |");
                     Console.WriteLine("+================================+");
                     Console.WriteLine("| Other:                         |");
                     Console.WriteLine("| 0 - Exit                       |");
@@ -84,7 +86,7 @@ namespace couchbase
                     Console.WriteLine("| Enter command:                 |");
                     Console.WriteLine("+================================+");
 
-                    Console.SetCursorPosition(17, 16);
+                    Console.SetCursorPosition(17, 18);
                     _command = Console.ReadLine();
 
                     Console.Clear();
@@ -266,6 +268,36 @@ namespace couchbase
                         Actor.Facade.StoreDocument(new Actor(id, name));
 
                         Console.SetCursorPosition(0, 7);
+                    }
+
+                    if (_command.Equals("9"))
+                    {
+                        Console.WriteLine("+==============================+");
+                        Console.WriteLine("| ==      Delete movie      == |");
+                        Console.WriteLine("+==============================+");
+                        Console.WriteLine("| Enter ID:                    |");
+                        Console.WriteLine("+==============================+");
+
+                        Console.SetCursorPosition(12, 3);
+                        var id = Console.ReadLine();
+
+                        Movie.Facade.DeleteDocument<Movie>(Movie.Facade.GetDocument<Movie>(id));
+                        Console.SetCursorPosition(0, 5);
+                    }
+
+                    if (_command.Equals("10"))
+                    {
+                        Console.WriteLine("+==============================+");
+                        Console.WriteLine("| ==      Delete actor      == |");
+                        Console.WriteLine("+==============================+");
+                        Console.WriteLine("| Enter ID:                    |");
+                        Console.WriteLine("+==============================+");
+
+                        Console.SetCursorPosition(12, 3);
+                        var id = Console.ReadLine();
+
+                        Actor.Facade.DeleteDocument<Actor>(Actor.Facade.GetDocument<Actor>(id));
+                        Console.SetCursorPosition(0, 5);
                     }
 
                     if (!_command.Equals("0"))
